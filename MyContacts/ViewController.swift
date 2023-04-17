@@ -10,9 +10,13 @@ import UIKit
 class ViewController : UIViewController, UITableViewDelegate,UITableViewDataSource  {
     
     @IBOutlet var tableView:UITableView!
-    //var mylist = MovieList()
+    @IBOutlet var searchBar:UISearchBar!
+    
     var mylist = ContactList()
     var selectedIndex = 0
+    var searchArray = ContactList()
+    var isSeaching = false
+    
     
     @IBAction func toggleEditMode(_ sender:UIBarButtonItem){
         
@@ -35,7 +39,8 @@ class ViewController : UIViewController, UITableViewDelegate,UITableViewDataSour
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
-     //   print("View appear called")
+        print("View appear called")
+        print(mylist.Contacts.count)
     }
     
     
@@ -52,22 +57,33 @@ class ViewController : UIViewController, UITableViewDelegate,UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mylist.Contacts.count
+        
+        if(isSeaching){
+            return searchArray.Contacts.count
+            
+        }
+        else{
+            return mylist.Contacts.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mycell", for: indexPath) as! CustomTableViewCell
         
         tableView.rowHeight = 70
-        
-//        cell.Title.text = mylist.movies.movies[indexPath.row].Title
-//        cell.Rating.text = mylist.movies.movies[indexPath.row].Rated
-//        cell.Year.text = mylist.movies.movies[indexPath.row].Year
-        
-        cell.ContactName.text = mylist.Contacts[indexPath.row].FirstName + mylist.Contacts[indexPath.row].LastName
-        cell.PrimaryNumber.text = mylist.Contacts[indexPath.row].PrimaryPhone
-        
-        selectedIndex = indexPath.row
+        if(isSeaching){
+            
+            cell.ContactName.text = searchArray.Contacts[indexPath.row].FirstName + " " + searchArray.Contacts[indexPath.row].LastName
+            cell.PrimaryNumber.text = searchArray.Contacts[indexPath.row].PrimaryPhone
+        }
+        else{
+            
+            cell.ContactName.text = mylist.Contacts[indexPath.row].FirstName + " " + mylist.Contacts[indexPath.row].LastName
+            cell.PrimaryNumber.text = mylist.Contacts[indexPath.row].PrimaryPhone
+            
+            
+            selectedIndex = indexPath.row
+        }
         
         return cell
     }
@@ -109,9 +125,9 @@ class ViewController : UIViewController, UITableViewDelegate,UITableViewDataSour
         }
     }
     
-    @IBAction func AddMovie(_ sender : UIBarButtonItem){
+    @IBAction func AddContact(_ sender : UIBarButtonItem){
         
-        let alert = UIAlertController(title: "Add new Movie", message: "Add your favorite movie", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add new Contact", message: "Add a new contact to your list", preferredStyle: .alert)
         let alertCancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let alertOkAction = UIAlertAction(title: "OK", style: .default)
         
@@ -127,19 +143,32 @@ class ViewController : UIViewController, UITableViewDelegate,UITableViewDataSour
             
         case "add":
             let dst = segue.destination as! DetailsViewController
-            dst.selectedMovieIndex = 0
+            dst.selectedIndex = -1
             dst.contactlist = mylist
         case "modify":
             let dst = segue.destination as! DetailsViewController
             dst.contactlist = mylist
-            dst.selectedMovieIndex = tableView.indexPathForSelectedRow?.row
+            dst.selectedIndex = tableView.indexPathForSelectedRow?.row
             
         default:
             preconditionFailure("Error in switch \(segue.identifier)")
         }
     }
     
-    
 }
 
+extension ViewController : UISearchBarDelegate{
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    
+        searchArray.Contacts = mylist.Contacts.filter({$0.FirstName.lowercased().prefix(searchText.count) ==  searchText.lowercased() || $0.LastName.lowercased().prefix(searchText.count) == searchText.lowercased()})
+        isSeaching = true
+        tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        isSeaching = false
+        searchBar.text = ""
+        tableView.reloadData()
+    }
+}
 

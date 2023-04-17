@@ -12,83 +12,81 @@ class DetailsViewController: UIViewController {
     @IBOutlet var formTitle:UINavigationItem!
     
     var contactlist:ContactList!
-    var selectedMovieIndex:Int!
+    var selectedIndex:Int!
     
-    @IBOutlet weak var titleTextfield:UITextField!
-    @IBOutlet weak var yearTextfield:UITextField!
-    @IBOutlet weak var ratingTextfield:UITextField!
-    @IBOutlet weak var runtimeTextfield:UITextField!
-    @IBOutlet weak var directorTextfield:UITextField!
-    @IBOutlet weak var actorTextfield:UITextView!
+    @IBOutlet weak var firstNameTextfield:UITextField!
+    @IBOutlet weak var lastNameTextfield:UITextField!
+    @IBOutlet weak var primaryPhoneTextfield:UITextField!
+    @IBOutlet weak var secondaryPhoneTextfield:UITextField!
+    @IBOutlet weak var companyTextfield:UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        //setting the border to actor textview to have similar look to text fields
-        actorTextfield.layer.borderColor = CGColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
-        actorTextfield.layer.borderWidth = 1.0
-        actorTextfield.layer.cornerRadius = 5
         
-        if(selectedMovieIndex > 0){
-            formTitle.title = "Modify Movie"
-            titleTextfield.text! = movielist.movies.movies[selectedMovieIndex].Title
-            yearTextfield.text! = movielist.movies.movies[selectedMovieIndex].Year
-            ratingTextfield.text! = movielist.movies.movies[selectedMovieIndex].Rated
-            runtimeTextfield.text! = movielist.movies.movies[selectedMovieIndex].Runtime
-            directorTextfield.text! = movielist.movies.movies[selectedMovieIndex].Director
-            actorTextfield.text! = formattedActors(actors: movielist.movies.movies[selectedMovieIndex].Actors)
+        // Do any additional setup after loading the view.
+        
+        
+        if(selectedIndex >= 0){
+            formTitle.title = "Update Contact"
+            firstNameTextfield.text! = contactlist.Contacts[selectedIndex].FirstName
+            lastNameTextfield.text! = contactlist.Contacts[selectedIndex].LastName
+            primaryPhoneTextfield.text! = contactlist.Contacts[selectedIndex].PrimaryPhone
+            secondaryPhoneTextfield.text! = contactlist.Contacts[selectedIndex].SecondaryPhone
+            companyTextfield.text! = contactlist.Contacts[selectedIndex].CompanyName
+            
         }
         else{
-            formTitle.title = "Add Movie"
+            formTitle.title = "Add Contact"
         }
         
     }
     
     @IBAction func SaveMovie(){
         
-        if(selectedMovieIndex > 0) {
+        if(selectedIndex >= 0) {
             
-            let existingMovie = movielist.movies.movies[selectedMovieIndex]
-            existingMovie.Title  = titleTextfield.text!
-            existingMovie.Year = yearTextfield.text!
-            existingMovie.Rated = ratingTextfield.text!
-            existingMovie.Runtime = runtimeTextfield.text!
-            existingMovie.Director = directorTextfield.text!
-            existingMovie.Actors = actorTextfield.text!
+            let existingContact = contactlist.Contacts[selectedIndex]
+            existingContact.FirstName  = firstNameTextfield.text!
+            existingContact.LastName = lastNameTextfield.text!
+            existingContact.PrimaryPhone = primaryPhoneTextfield.text!
+            existingContact.SecondaryPhone = secondaryPhoneTextfield.text!
+            existingContact.CompanyName = companyTextfield.text!
             
-            if(existingMovie.Title == "" || existingMovie.Rated == "" || existingMovie.Year == "")
+            
+            if(existingContact.FirstName == "" || existingContact.PrimaryPhone == "")
             {
-                let alert = UIAlertController(title: "Missing mandatory fields", message: " Title , Rating and year are mandatory fields.\nPlease fill in the same and try again.", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Missing mandatory fields", message: " First Name and Primary phone number are mandatory fields.\nPlease fill in the same and try again.", preferredStyle: .alert)
                 let alertOkAction = UIAlertAction(title: "OK", style: .default)
                 
                 alert.addAction(alertOkAction)
                 self.present(alert, animated: true)
                 return
             }
-            movielist.movies.movies.remove(at: selectedMovieIndex)
-            movielist.movies.movies.insert(existingMovie, at: selectedMovieIndex)
             
-            let alert = UIAlertController(title: "Modified the movie", message: " \(existingMovie.Title) is modified as per your request. Thank you.", preferredStyle: .alert)
+            contactlist.Contacts.remove(at: selectedIndex)
+            contactlist.Contacts.insert(existingContact, at: selectedIndex)
+            
+            
+            let alert = UIAlertController(title: "Updated the contact", message: " \(existingContact.FirstName) is modified as per your request. Thank you.", preferredStyle: .alert)
             let alertOkAction = UIAlertAction(title: "OK", style: .default)
             alert.addAction(alertOkAction)
             self.present(alert, animated: true)
             clearTextfields()
-          //  print("modify movie called")
+            
             return
         }
         else {
-            let newMovie = Movie()
-            newMovie.Title = titleTextfield.text!
-            newMovie.Year = yearTextfield.text!
-            newMovie.Rated = ratingTextfield.text!
-            newMovie.Runtime = runtimeTextfield.text!
-            newMovie.Director = directorTextfield.text!
-            newMovie.Actors = actorTextfield.text!
+            let newContact = Contact()
+            newContact.FirstName  = firstNameTextfield.text!
+            newContact.LastName = lastNameTextfield.text!
+            newContact.PrimaryPhone = primaryPhoneTextfield.text!
+            newContact.SecondaryPhone = secondaryPhoneTextfield.text!
+            newContact.CompanyName = companyTextfield.text!
             
-            if(newMovie.Title == "" || newMovie.Rated == "" || newMovie.Year == "")
+            
+            if(newContact.FirstName == "" || newContact.PrimaryPhone == "")
             {
-                let alert = UIAlertController(title: "Missing mandatory fields", message: " Title , Rating and year are mandatory fields.\nPlease fill in the same and try again.", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Missing mandatory fields", message: " First Name and Primary phone number are mandatory fields.\nPlease fill in the same and try again.", preferredStyle: .alert)
                 let alertOkAction = UIAlertAction(title: "OK", style: .default)
                 
                 alert.addAction(alertOkAction)
@@ -96,11 +94,11 @@ class DetailsViewController: UIViewController {
                 return
             }
             
-            let result = movielist.movies.movies.first(where: {$0.Title == newMovie.Title})
+            let result = contactlist.Contacts.first(where: {$0.PrimaryPhone == newContact.PrimaryPhone || $0.SecondaryPhone == newContact.PrimaryPhone})
             
             if(result != nil)
             {
-                let alert = UIAlertController(title: "Duplicate entry", message: " \(newMovie.Title) is already present in your movie list. Please add another movie.", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Duplicate entry", message: " \(newContact.PrimaryPhone) is already present in your contact list. Please add another contact.", preferredStyle: .alert)
                 let alertOkAction = UIAlertAction(title: "OK", style: .default)
                 
                 alert.addAction(alertOkAction)
@@ -109,57 +107,26 @@ class DetailsViewController: UIViewController {
                 
             }
             
-            movielist.movies.movies.append(newMovie)
+            contactlist.Contacts.append(newContact)
+         //   contactlist.Contacts.insert(newContact, at: contactlist.Contacts.count)
+            print("New item added in details " + String(contactlist.Contacts.count))
             
-            let alert = UIAlertController(title: "Saved the movie", message: " \(newMovie.Title) is added to your movie list. Thank you.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Saved the contact", message: " \(newContact.FirstName) is added to your contact list. Thank you.", preferredStyle: .alert)
             let alertOkAction = UIAlertAction(title: "OK", style: .default)
             alert.addAction(alertOkAction)
             self.present(alert, animated: true)
             clearTextfields()
-          //  print("save movie called")
+            
             return
         }
     }
     
     func clearTextfields(){
-        titleTextfield.text = ""
-        yearTextfield.text = ""
-        ratingTextfield.text = ""
-        runtimeTextfield.text = ""
-        directorTextfield.text = ""
-        actorTextfield.text = ""
+        firstNameTextfield.text = ""
+        lastNameTextfield.text = ""
+        primaryPhoneTextfield.text = ""
+        secondaryPhoneTextfield.text = ""
+        companyTextfield.text = ""
     }
     
-    func formattedActors(actors:String) -> String {
-        
-        return " "+actors.replacingOccurrences(of: ",", with:"\n")
-    }
-    
-
-    
-    // MARK: - Navigation
-/*
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-   // override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-        
-       
-        
-        switch segue.identifier{
-            
-        case "add":
-            let dst = segue.destination as! ViewController
-            dst.mylist.movies.movies = mylist.movies.movies
-        default:
-            preconditionFailure("Error in switch")
-            
-        }
-        
-    }*/
-    
-    
-    
-   
-
 }

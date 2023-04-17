@@ -11,13 +11,23 @@
         <!--View Controller-->
         <scene sceneID="Bws-iy-9Aj">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MT9-Oe-B0e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="Tvv-G8-cV1" customClass="ViewController" customModule="MyContacts" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="67n-9f-zNz">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8Vs-XX-JnE">
-                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                            <searchBar contentMode="redraw" fixedFrame="YES" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ADd-Zg-FAW">
+                                <rect key="frame" x="0.0" y="100" width="393" height="56"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Tvv-G8-cV1" id="5st-b2-bjY"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8Vs-XX-JnE">
+                                <rect key="frame" x="0.0" y="206" width="393" height="725"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="mycell" editingAccessoryType="detailButton" rowHeight="97" id="XYz-65-YQm" customClass="CustomTableViewCell" customModule="MyContacts" customModuleProvider="target">
@@ -28,7 +38,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="person.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Aua-0a-jwv">
-                                                    <rect key="frame" x="20" y="2" width="93" height="94"/>
+                                                    <rect key="frame" x="20" y="10" width="67" height="60"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="contactImage"/>
                                                 </imageView>
@@ -41,17 +51,20 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Primary Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9kM-UL-brE">
-                                                    <rect key="frame" x="175" y="49" width="170" height="21"/>
+                                                    <rect key="frame" x="170" y="41" width="170" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="PrimaryNumber"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" systemColor="placeholderTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration" identifier="mycell"/>
                                         <connections>
+                                            <outlet property="ContactImage" destination="Aua-0a-jwv" id="Iha-qR-Rl6"/>
+                                            <outlet property="ContactName" destination="6pi-To-vB5" id="GdK-Ph-JU3"/>
+                                            <outlet property="PrimaryNumber" destination="9kM-UL-brE" id="Pe4-iP-EcC"/>
                                             <segue destination="ffh-07-gpU" kind="show" identifier="modify" id="9FK-eh-GVM"/>
                                         </connections>
                                     </tableViewCell>
@@ -60,16 +73,6 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1CR-dS-Yrm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="1CR-dS-Yrm" firstAttribute="trailing" secondItem="8Vs-XX-JnE" secondAttribute="trailing" id="9hc-pz-teL"/>
-                            <constraint firstItem="8Vs-XX-JnE" firstAttribute="leading" secondItem="1CR-dS-Yrm" secondAttribute="leading" id="CTr-5o-bfL"/>
-                            <constraint firstItem="8Vs-XX-JnE" firstAttribute="top" secondItem="1CR-dS-Yrm" secondAttribute="top" id="HKO-Ff-V4Z"/>
-                            <constraint firstItem="8Vs-XX-JnE" firstAttribute="top" secondItem="1CR-dS-Yrm" secondAttribute="top" id="MwU-xm-Oy4"/>
-                            <constraint firstItem="1CR-dS-Yrm" firstAttribute="bottom" secondItem="8Vs-XX-JnE" secondAttribute="bottom" id="lDN-wr-YbF"/>
-                            <constraint firstItem="1CR-dS-Yrm" firstAttribute="trailing" secondItem="8Vs-XX-JnE" secondAttribute="trailing" id="ojc-YN-aMg"/>
-                            <constraint firstItem="1CR-dS-Yrm" firstAttribute="bottom" secondItem="8Vs-XX-JnE" secondAttribute="bottom" id="uCD-tZ-T3E"/>
-                            <constraint firstItem="8Vs-XX-JnE" firstAttribute="leading" secondItem="1CR-dS-Yrm" secondAttribute="leading" id="uUD-w0-vzD"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="gPA-kl-9X1">
                         <barButtonItem key="leftBarButtonItem" title="Edit" id="77h-GD-4K7">
@@ -79,7 +82,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Add" id="Q7m-17-yKl">
                             <connections>
-                                <action selector="AddMovie:" destination="Tvv-G8-cV1" id="atV-uF-kWU"/>
+                                <action selector="AddContact:" destination="Tvv-G8-cV1" id="QCp-F8-wiP"/>
                                 <segue destination="ffh-07-gpU" kind="show" identifier="add" id="buM-0E-iAC"/>
                             </connections>
                         </barButtonItem>
@@ -88,11 +91,10 @@
                         <outlet property="tableView" destination="8Vs-XX-JnE" id="BUF-ax-yDB"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MT9-Oe-B0e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="504.58015267175568" y="-61.267605633802823"/>
         </scene>
-        <!--Add Movie-->
+        <!--Add Contact-->
         <scene sceneID="l4w-eN-cbs">
             <objects>
                 <viewController id="ffh-07-gpU" customClass="DetailsViewController" customModule="MyContacts" customModuleProvider="target" sceneMemberID="viewController">
@@ -103,14 +105,13 @@
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mVJ-Zb-45A">
                                 <rect key="frame" x="181" y="238" width="145" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="txtfldTitle"/>
+                                <accessibility key="accessibilityConfiguration" identifier="txtfldFirstName"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Release Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="frR-Xu-2L4">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Last Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="frR-Xu-2L4">
                                 <rect key="frame" x="39" y="292" width="111" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label="lblReleaseYr"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -118,14 +119,13 @@
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bg8-sT-XJl">
                                 <rect key="frame" x="181" y="292" width="145" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="txtfldYear"/>
+                                <accessibility key="accessibilityConfiguration" identifier="txtfldLastName"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rating" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Efw-Fh-oUk">
-                                <rect key="frame" x="39" y="347" width="62" height="25"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Primary Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Efw-Fh-oUk">
+                                <rect key="frame" x="39" y="347" width="134" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="lblRating"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -133,62 +133,47 @@
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Rm-04-fQU">
                                 <rect key="frame" x="181" y="342" width="145" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="txtfldRating"/>
+                                <accessibility key="accessibilityConfiguration" identifier="txtfldPrimePhone"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="RunTime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hyI-7L-VbK">
-                                <rect key="frame" x="39" y="398" width="81" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GkB-Hv-QZR">
                                 <rect key="frame" x="181" y="393" width="145" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="txtfldRunTime"/>
+                                <accessibility key="accessibilityConfiguration" identifier="txtfldSecondPhone"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4H4-ke-hQd">
                                 <rect key="frame" x="181" y="450" width="145" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="txtfldDirector"/>
+                                <accessibility key="accessibilityConfiguration" identifier="txtfldCompany"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K6Y-7P-fpO">
-                                <rect key="frame" x="39" y="243" width="42" height="25"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="First Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K6Y-7P-fpO">
+                                <rect key="frame" x="39" y="243" width="104" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Director" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSo-2o-xYz">
-                                <rect key="frame" x="39" y="457" width="62" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Company" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSo-2o-xYz">
+                                <rect key="frame" x="39" y="457" width="73" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Actors" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MHV-qr-BHD">
-                                <rect key="frame" x="39" y="508" width="62" height="25"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Secondary Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hyI-7L-VbK">
+                                <rect key="frame" x="27" y="393" width="146" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FKa-au-XXb">
-                                <rect key="frame" x="181" y="508" width="161" height="144"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="txtfldActor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hzK-zV-cpD">
-                                <rect key="frame" x="181" y="673" width="61" height="35"/>
+                                <rect key="frame" x="166" y="538" width="61" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration" identifier="btnSave"/>
                                 <state key="normal" title="Button"/>
@@ -201,15 +186,14 @@
                         <viewLayoutGuide key="safeArea" id="aqZ-7D-eCz"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Movie" customizationIdentifier="formTitle" id="rhj-nJ-qN5"/>
+                    <navigationItem key="navigationItem" title="Add Contact" customizationIdentifier="formTitle" id="rhj-nJ-qN5"/>
                     <connections>
-                        <outlet property="actorTextfield" destination="FKa-au-XXb" id="okJ-Rn-GTk"/>
-                        <outlet property="directorTextfield" destination="4H4-ke-hQd" id="Egk-up-EZY"/>
+                        <outlet property="companyTextfield" destination="4H4-ke-hQd" id="HBR-18-5ot"/>
+                        <outlet property="firstNameTextfield" destination="mVJ-Zb-45A" id="e4N-lf-fA5"/>
                         <outlet property="formTitle" destination="rhj-nJ-qN5" id="AzS-nD-65j"/>
-                        <outlet property="ratingTextfield" destination="3Rm-04-fQU" id="9Db-EY-CYK"/>
-                        <outlet property="runtimeTextfield" destination="GkB-Hv-QZR" id="ILq-25-Z7p"/>
-                        <outlet property="titleTextfield" destination="mVJ-Zb-45A" id="xPf-8s-fRm"/>
-                        <outlet property="yearTextfield" destination="bg8-sT-XJl" id="e3r-B4-lxF"/>
+                        <outlet property="lastNameTextfield" destination="bg8-sT-XJl" id="afk-3a-kIf"/>
+                        <outlet property="primaryPhoneTextfield" destination="3Rm-04-fQU" id="cdv-e6-lW4"/>
+                        <outlet property="secondaryPhoneTextfield" destination="GkB-Hv-QZR" id="qNg-5k-Vwh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qmw-Yu-Nfp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -240,6 +224,9 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="person.circle" catalog="system" width="128" height="123"/>
+        <systemColor name="placeholderTextColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
