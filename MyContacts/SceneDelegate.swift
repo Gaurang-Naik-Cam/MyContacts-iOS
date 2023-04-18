@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  A4_TableView
 //
-//  Created by Cambrian on 2023-03-22.
+//
+//  Created by Gaurang Naik on 2023-03-22.
 //
 
 import UIKit
